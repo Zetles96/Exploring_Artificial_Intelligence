@@ -69,5 +69,5 @@ O = np.array([[11, 22, 33], [44, 55, 66], [77, 88, 99]])
 print(O[:, 2])
 # 27. How to extract the sub-array consisting of the odd rows and even columns of P [[3, 6, 9, 12], [15,
 # 18, 21, 24], [27, 30, 33, 36], [39, 42, 45, 48], [51, 54, 57, 60]] ?
-P = np.arange(3, 61, 3).reshape(5, 4)
+P = np.arange(3, 60 + 1, 3).reshape(5, 4)
 print(P[::2, 1::2])

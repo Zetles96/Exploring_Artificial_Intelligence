@@ -45,6 +45,7 @@ print(J * K)
 print(J / K)
 # 17. How to find the total sum of elements of array I?
 print(I.sum())
+l
 # 18. How to find natural log of array I?
 print(np.log(I))
 # 19. How to use build an array L with [8, 8, 8, 8, 8] using full/repeat function?

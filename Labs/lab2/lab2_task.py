@@ -137,4 +137,4 @@ class NaiveBayesClassifier:
 #
 #     accuracy_score = np.sum(test_predict == test_labels) / test_labels.shape[0]
 #
-#     print(accuracy_score)  # should be 0.67
+# print(accuracy_score)  # should be 0.67

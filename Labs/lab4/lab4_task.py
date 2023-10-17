@@ -164,7 +164,7 @@ if __name__ == '__main__':
     # 4 features: Petal Length, Petal Width, Sepal Length, Sepal width
     y = iris.target
     # 0, 1, 2, three Classes(Species)
-
+    np.random.seed(23333)
     ############ show the dataset ############
     print('X.shape:', X.shape)
     print('y.shape:', y.shape)

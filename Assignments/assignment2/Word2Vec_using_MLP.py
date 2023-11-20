@@ -50,20 +50,29 @@ def generate_training_data_cbow(words_in_order, word_to_index, window_size):
       a tuple of 2 numpy arrays
     """
     vocab_size = len(word_to_index)
+    special_number = -1
+
     x_cbow = []
     y_cbow = []
 
-    for i in range(window_size, len(words_in_order) - window_size):
-        context = []
-        target = word_to_index[words_in_order[i]]
+    for i, target_word in enumerate(words_in_order):
+        context_words = []
 
-        for j in range(i - window_size, i + window_size + 1):
-            if j != i:
-                context.append(word_to_index.get(words_in_order[j], -1))
+        # Collect context words within the window size
+        start_index = max(0, i - window_size)
+        end_index = min(len(words_in_order), i + window_size + 1)
+        context_words = [word_to_index.get(words_in_order[j], special_number) for j in range(start_index, end_index) if
+                         j != i]
 
-        x_cbow.append(context)
-        y_cbow.append(target)
+        # Fill up missing context words if the window size is not met
+        while len(context_words) < window_size * 2:
+            context_words.append(special_number)
 
+        # Append the target and context words to the training data
+        x_cbow.append(context_words)
+        y_cbow.append(word_to_index[target_word])
+
+    # Convert lists to NumPy arrays
     x_cbow = np.array(x_cbow)
     y_cbow = np.array(y_cbow)
 
@@ -83,17 +92,22 @@ def generate_training_data_skipgram(words_in_order, word_to_index, window_size):
       a tuple of 2 numpy arrays
     """
     vocab_size = len(word_to_index)
+
     x_skipgram = []
     y_skipgram = []
 
-    for i in range(window_size, len(words_in_order) - window_size):
-        target = word_to_index[words_in_order[i]]
+    for i, target_word in enumerate(words_in_order):
+        # Context words within the window size
+        start_index = max(0, i - window_size)
+        end_index = min(len(words_in_order), i + window_size + 1)
+        context_words = [word_to_index.get(words_in_order[j], -1) for j in range(start_index, end_index) if j != i]
 
-        for j in range(i - window_size, i + window_size + 1):
-            if j != i:
-                x_skipgram.append(target)
-                y_skipgram.append(word_to_index.get(words_in_order[j], -1))
+        # Create training pairs for skipgram
+        for context_word in context_words:
+            x_skipgram.append(word_to_index[target_word])
+            y_skipgram.append(context_word)
 
+    # Convert lists to NumPy arrays
     x_skipgram = np.array(x_skipgram)
     y_skipgram = np.array(y_skipgram)
 

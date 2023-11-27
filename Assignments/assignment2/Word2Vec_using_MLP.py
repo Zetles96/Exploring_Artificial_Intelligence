@@ -141,15 +141,11 @@ def one_hot_multicategorical(arr, num_vocabs):
     Returns:
       a 2D numpy array of the multicategorical one-hot representation of arr
     """
-    one_hot_list = []
+    rows, cols = arr.shape
+    one_hot_matrix = np.zeros((rows, num_vocabs), dtype=int)
+    one_hot_matrix[np.arange(rows)[:, np.newaxis], arr] = 1
 
-    for row in arr:
-        one_hot_row = np.zeros(num_vocabs)
-        for item in row:
-            one_hot_row[item] = 1
-        one_hot_list.append(one_hot_row)
-
-    return np.array(one_hot_list)
+    return one_hot_matrix
 
 
 def create_cbow_model(num_vocabs, dims_to_learn=50):
